@@ -10,7 +10,7 @@ android {
     namespace = "com.my.kizzy"
 
     defaultConfig {
-        applicationId = "com.my.kizzy"
+        applicationId = "io.kizzy.fork"
         versionCode = libs.versions.version.code.get().toInt()
         versionName = libs.versions.version.name.get()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -18,10 +18,23 @@ android {
             useSupportLibrary = true
         }
     }
+    signingConfigs {
+        create("release") {
+            // Populated from environment variables in CI (see .github/workflows/release.yml).
+            // Left unconfigured for local debug builds.
+            System.getenv("KEYSTORE_FILE")?.let { ksPath ->
+                storeFile = file(ksPath)
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
     buildTypes {
         release {
             isShrinkResources = true
             isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
