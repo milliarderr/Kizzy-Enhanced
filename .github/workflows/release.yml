@@ -3,6 +3,9 @@ name: Build Release Apk
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build Signed Release Apk
@@ -47,3 +50,21 @@ jobs:
         with:
           name: apk-release
           path: app/build/outputs/apk/release/**.apk
+
+      - name: Find APK
+        id: apk
+        run: echo "path=$(find app/build/outputs/apk/release -name '*.apk' | head -1)" >> "$GITHUB_OUTPUT"
+
+      - name: Publish to Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: fork-${{ github.run_number }}
+          name: Kizzy Fork build ${{ github.run_number }}
+          body: |
+            Signed release build of the Kizzy Fork (package `io.kizzy.fork`).
+
+            Fork customizations built by Claude (Anthropic's Claude Code).
+            See the [README](../../blob/master/README.md) for the full list of changes.
+          files: ${{ steps.apk.outputs.path }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
