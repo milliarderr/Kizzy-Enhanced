@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.my.kizzy.domain.model.rpc.RpcConfig
 import com.my.kizzy.domain.model.user.User
 import com.my.kizzy.feature_profile.ui.component.Logout
 import com.my.kizzy.feature_profile.ui.component.ProfileCard
@@ -142,7 +143,8 @@ fun UserScreenPreview2() {
     UserScreen(
         state = UserState.Error(
             error = "No Internet Connection",
-            user = fakeUser
+            user = fakeUser,
+            rpcConfig = RpcConfig(name = "Kizzy", details = "Using Kizzy")
         ),
         onBackPressed = {}
     )
@@ -152,7 +154,8 @@ fun UserScreenPreview2() {
 fun UserScreenPreview3() {
     UserScreen(
         state = UserState.LoadingCompleted(
-            user = fakeUser
+            user = fakeUser,
+            rpcConfig = RpcConfig(name = "Kizzy", details = "Using Kizzy")
         ),
         onBackPressed = {}
     )
