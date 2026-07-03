@@ -1,12 +1,13 @@
 <div align="center">
-<h1>Kizzy Fork</h1>
-<h4>A customized fork of <a href="https://github.com/dead8309/Kizzy">Kizzy</a> — a Discord Rich Presence manager for Android, written in Kotlin.</h4>
+<h1>Kizzy Enhanced</h1>
+<h4>An enhanced fork of <a href="https://github.com/dead8309/Kizzy">Kizzy</a> — a Discord Rich Presence manager for Android, written in Kotlin.</h4>
 </div>
 
 <div align="center">
 <img src="https://img.shields.io/badge/Minimum%20SDK-27-%23?&style=flat-square&color=5b5ef7">
 <img src="https://img.shields.io/badge/kotlin-5b5ef7.svg?logo=kotlin&logoColor=white&style=flat-square">
 <img src="https://img.shields.io/badge/package-io.kizzy.fork-5b5ef7?style=flat-square">
+<img src="https://img.shields.io/badge/name-Kizzy%20Enhanced-5b5ef7?style=flat-square">
 </div>
 
 <div align="center">
@@ -16,7 +17,7 @@
 </div>
 
 > [!NOTE]
-> This is a personal fork of [Kizzy](https://github.com/dead8309/Kizzy) by dead8309. Fork-specific additions are marked with ⭐ below.
+> **Kizzy Enhanced** is a personal fork of [Kizzy](https://github.com/dead8309/Kizzy) by dead8309. Fork-specific additions are marked with ⭐ below.
 
 ## Features
 
@@ -92,7 +93,7 @@ In addition to the original ones, with autocomplete:
 ## Download
 Grab the latest signed `app-release.apk` from the [**Releases**](../../releases/latest) page.
 
-The fork uses the package id **`io.kizzy.fork`**, so it installs alongside the original Kizzy if you have it.
+**Kizzy Enhanced** uses the package id **`io.kizzy.fork`**, so it installs alongside the original Kizzy if you have it.
 
 > [!WARNING]
 > This app uses the Discord Gateway connection. Use it at your own risk.

@@ -1,12 +1,13 @@
 <div align="center">
-<h1>Kizzy Fork</h1>
-<h4>Кастомный форк <a href="https://github.com/dead8309/Kizzy">Kizzy</a> — менеджер Discord Rich Presence для Android, написанный на Kotlin.</h4>
+<h1>Kizzy Enhanced</h1>
+<h4>Расширенный форк <a href="https://github.com/dead8309/Kizzy">Kizzy</a> — менеджер Discord Rich Presence для Android, написанный на Kotlin.</h4>
 </div>
 
 <div align="center">
 <img src="https://img.shields.io/badge/Minimum%20SDK-27-%23?&style=flat-square&color=5b5ef7">
 <img src="https://img.shields.io/badge/kotlin-5b5ef7.svg?logo=kotlin&logoColor=white&style=flat-square">
 <img src="https://img.shields.io/badge/package-io.kizzy.fork-5b5ef7?style=flat-square">
+<img src="https://img.shields.io/badge/name-Kizzy%20Enhanced-5b5ef7?style=flat-square">
 </div>
 
 <div align="center">
@@ -16,7 +17,7 @@
 </div>
 
 > [!NOTE]
-> Это личный форк [Kizzy](https://github.com/dead8309/Kizzy) от dead8309. Добавления форка отмечены ⭐.
+> **Kizzy Enhanced** — личный форк [Kizzy](https://github.com/dead8309/Kizzy) от dead8309. Добавления форка отмечены ⭐.
 
 ## Возможности
 
@@ -92,7 +93,7 @@
 ## Скачать
 Последний подписанный `app-release.apk` находится на странице [**Releases**](../../releases/latest).
 
-Форк использует package id **`io.kizzy.fork`**, поэтому устанавливается параллельно с оригинальным Kizzy.
+**Kizzy Enhanced** использует package id **`io.kizzy.fork`**, поэтому устанавливается параллельно с оригинальным Kizzy.
 
 > [!WARNING]
 > Приложение использует подключение к Discord Gateway. Используй на свой страх и риск.

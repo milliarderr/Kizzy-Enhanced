@@ -46,9 +46,9 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Set fork version
+      - name: Set version
         run: |
-          sed -i 's/version-name = ".*"/version-name = "6.2-fork-${{ github.run_number }}"/' gradle/libs.versions.toml
+          sed -i 's/version-name = ".*"/version-name = "6.2-enhanced-${{ github.run_number }}"/' gradle/libs.versions.toml
           sed -i 's/version-code =".*"/version-code ="${{ github.run_number }}"/' gradle/libs.versions.toml
 
       - name: Update app icon
@@ -110,8 +110,8 @@ jobs:
       - name: Publish to Releases
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: fork-${{ github.run_number }}
-          name: Kizzy Fork build ${{ github.run_number }}
+          tag_name: enhanced-${{ github.run_number }}
+          name: Kizzy Enhanced build ${{ github.run_number }}
           body: |
             ## What's new / Что нового
 
@@ -128,7 +128,7 @@ jobs:
             ---
 
             **Package / Пакет:** `io.kizzy.fork`
-            **Version / Версия:** `6.2-fork-${{ github.run_number }}`
+            **Version / Версия:** `6.2-enhanced-${{ github.run_number }}`
             **Base / База:** [Kizzy by dead8309](https://github.com/dead8309/Kizzy)
             See the [README](../../blob/master/README.md) for the full list of fork features.
           files: ${{ steps.apk.outputs.path }}

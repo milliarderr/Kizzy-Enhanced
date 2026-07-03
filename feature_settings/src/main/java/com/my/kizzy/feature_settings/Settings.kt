@@ -82,7 +82,7 @@ fun SettingsDrawer(
             modifier = Modifier.padding(15.dp)
         ) {
             Text(
-                text = "Kizzy " + BuildConfig.VERSION_NAME.replace("-fork-", " fork "),
+                text = "Kizzy Enhanced " + BuildConfig.VERSION_NAME.removePrefix("6.2-enhanced-").let { if (it != BuildConfig.VERSION_NAME) it else BuildConfig.VERSION_NAME },
                 style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
                 modifier = Modifier.padding(top = 8.dp, bottom = 10.dp)
             )

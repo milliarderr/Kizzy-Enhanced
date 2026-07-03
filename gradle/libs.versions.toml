@@ -2,7 +2,7 @@
 # project level
 gradle = "8.13.2"
 kotlin = "1.9.23"
-version-name = "6.2-fork-0"
+version-name = "6.2-enhanced-0"
 version-code ="14"
 
 # app level
