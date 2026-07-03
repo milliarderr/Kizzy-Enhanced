@@ -102,7 +102,7 @@ Grab the latest signed `app-release.apk` from the [**Releases**](../../releases/
 > Prerequisites: Android Studio, and familiarity with Gradle, Kotlin, and Jetpack Compose.
 
 ```console
-git clone https://github.com/milliarderr/Kizzy.git
+git clone https://github.com/milliarderr/Kizzy-Enhanced.git
 ```
 Open the project in Android Studio, import it, then Build and Run. Release builds are produced automatically by the **Build Release Apk** GitHub Actions workflow.
 
