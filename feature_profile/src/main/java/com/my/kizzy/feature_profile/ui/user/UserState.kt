@@ -13,11 +13,12 @@
 package com.my.kizzy.feature_profile.ui.user
 
 import androidx.compose.runtime.Stable
+import com.my.kizzy.domain.model.rpc.RpcConfig
 import com.my.kizzy.domain.model.user.User
 
 @Stable
 sealed interface UserState {
     object Loading: UserState
-    class Error(val error: String,val user: User?): UserState
-    class LoadingCompleted(val user: User?): UserState
+    class Error(val error: String, val user: User?, val rpcConfig: RpcConfig): UserState
+    class LoadingCompleted(val user: User?, val rpcConfig: RpcConfig): UserState
 }

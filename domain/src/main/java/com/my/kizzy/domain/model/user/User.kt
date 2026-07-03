@@ -56,12 +56,19 @@ val globalName: String? = null
         else
             "${DISCORD_CDN}/avatars/${id}/${avatar}.png?size=512"
     }
+    fun getStaticAvatarImage(): String {
+        return "${DISCORD_CDN}/avatars/${id}/${avatar}.png?size=512"
+    }
     fun getBannerImage(): String? {
         if (banner.isNullOrEmpty()) return null
         return if (banner.startsWith("a_"))
             "$DISCORD_CDN/banners/${id}/${banner}.gif?size=480"
         else
             "$DISCORD_CDN/banners/${id}/${banner}.png?size=480"
+    }
+    fun getStaticBannerImage(): String? {
+        if (banner.isNullOrEmpty()) return null
+        return "$DISCORD_CDN/banners/${id}/${banner}.png?size=480"
     }
 }
 

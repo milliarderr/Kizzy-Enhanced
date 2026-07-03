@@ -65,7 +65,7 @@ fun UserScreen(
                             .align(Alignment.TopCenter),
                         error = (state.error)
                     )
-                    ProfileCard(state.user)
+                    ProfileCard(state.user, rpcConfig = state.rpcConfig)
                 }
 
                 UserState.Loading -> {
@@ -75,7 +75,7 @@ fun UserScreen(
                 }
 
                 is UserState.LoadingCompleted -> {
-                    ProfileCard(state.user)
+                    ProfileCard(state.user, rpcConfig = state.rpcConfig)
                     Logout(
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
