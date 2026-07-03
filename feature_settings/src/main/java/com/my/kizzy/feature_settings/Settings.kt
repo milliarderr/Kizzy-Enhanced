@@ -81,11 +81,23 @@ fun SettingsDrawer(
         Column(
             modifier = Modifier.padding(15.dp)
         ) {
-            Text(
-                text = "Kizzy Enhanced " + BuildConfig.VERSION_NAME.removePrefix("6.2-enhanced-").let { if (it != BuildConfig.VERSION_NAME) it else BuildConfig.VERSION_NAME },
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+            BadgedBox(
+                badge = {
+                    Badge(
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        contentColor = MaterialTheme.colorScheme.tertiary,
+                        modifier = Modifier.offset(8.dp, (-8).dp)
+                    ) {
+                        Text(text = "Enhanced")
+                    }
+                },
                 modifier = Modifier.padding(top = 8.dp, bottom = 10.dp)
-            )
+            ) {
+                Text(
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.titleSmall
+                )
+            }
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(5.dp),
                 modifier = Modifier.weight(8f)
