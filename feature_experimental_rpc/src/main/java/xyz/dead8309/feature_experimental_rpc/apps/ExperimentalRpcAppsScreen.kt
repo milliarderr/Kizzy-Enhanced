@@ -172,11 +172,16 @@ fun ExperimentalRpcAppsScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp)
                 ) {
-                    items(state.installedApps.filter {
-                        searchText.isEmpty() ||
-                                it.name.contains(searchText, ignoreCase = true) ||
-                                it.pkg.contains(searchText, ignoreCase = true)
-                    }) { app ->
+                    items(state.installedApps
+                        .filter {
+                            searchText.isEmpty() ||
+                                    it.name.contains(searchText, ignoreCase = true) ||
+                                    it.pkg.contains(searchText, ignoreCase = true)
+                        }
+                        .sortedWith(compareByDescending<com.my.kizzy.data.utils.AppsInfo> {
+                            state.enabledApps[it.pkg] ?: false
+                        }.thenBy { it.name })
+                    ) { app ->
                         val isChecked = state.enabledApps[app.pkg] ?: false
                         val selectedTypeId = state.appActivityTypes[app.pkg] ?: 0
                         val selectedType = Constants.ACTIVITY_TYPE.entries
