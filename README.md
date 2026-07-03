@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="256" height="256" alt="17831186969244515824460180534693" src="https://github.com/user-attachments/assets/02086040-660d-42d8-8830-78053e1e05a4" />
+  <img width="167" height="167" alt="17831186969244515824460180534693" src="https://github.com/user-attachments/assets/02086040-660d-42d8-8830-78053e1e05a4" />
 
 <h1>Kizzy Enhanced</h1>
 <h4>An enhanced fork of <a href="https://github.com/dead8309/Kizzy">Kizzy</a> — a Discord Rich Presence manager for Android, written in Kotlin.</h4>
