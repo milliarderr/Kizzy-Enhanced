@@ -41,6 +41,7 @@ import com.my.kizzy.feature_rpc_base.setLargeIcon
 import com.my.kizzy.preference.Prefs
 import com.my.kizzy.resources.R
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelChildren
@@ -197,22 +198,28 @@ class ExperimentalRpc : Service() {
 
         scope.launch {
             while (isActive) {
-                val currentApp = getCurrentlyRunningApp()
+                try {
+                    val currentApp = getCurrentlyRunningApp()
 
-                if (
-                    currentApp.name.isNotEmpty() &&
-                    currentApp.packageName != currentPackageName &&
-                    enabledExperimentalApps.contains(currentApp.packageName)
-                ) {
-                    currentPackageName = currentApp.packageName
-                    updatePresence(appInfo = currentApp.copy(time = startTimestamps))
-                } else if (currentApp.name.isNotEmpty() && currentApp.packageName != currentPackageName) {
-                    currentPackageName = ""
-                    if (!isMediaSessionActive || !useMediaRpc) {
-                        updatePresence(CommonRpc())
+                    if (
+                        currentApp.name.isNotEmpty() &&
+                        currentApp.packageName != currentPackageName &&
+                        enabledExperimentalApps.contains(currentApp.packageName)
+                    ) {
+                        currentPackageName = currentApp.packageName
+                        updatePresence(appInfo = currentApp.copy(time = startTimestamps))
+                    } else if (currentApp.name.isNotEmpty() && currentApp.packageName != currentPackageName) {
+                        currentPackageName = ""
+                        if (!isMediaSessionActive || !useMediaRpc) {
+                            updatePresence(CommonRpc())
+                        }
                     }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    logger.e(TAG, "Detection cycle failed: ${e.message}")
                 }
-                delay(5000)
+                delay(2000)
             }
         }
     }

@@ -24,15 +24,19 @@ import android.content.Intent
 import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import com.blankj.utilcode.util.AppUtils
+import com.my.kizzy.data.rpc.CommonRpc
 import com.my.kizzy.data.rpc.KizzyRPC
 import com.my.kizzy.data.rpc.RpcImage
+import com.my.kizzy.data.rpc.Timestamps
 import com.my.kizzy.domain.model.rpc.RpcButtons
 import com.my.kizzy.feature_rpc_base.Constants
 import com.my.kizzy.feature_rpc_base.setLargeIcon
 import com.my.kizzy.preference.Prefs
 import com.my.kizzy.resources.R
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
@@ -111,15 +115,21 @@ class AppDetectionService : Service() {
 
         scope.launch {
             while (isActive) {
-                val queryUsageStats = getUsageStats()
+                try {
+                    val queryUsageStats = getUsageStats()
 
-                if (queryUsageStats != null && queryUsageStats.size > 1) {
-                    val packageName = getLatestPackageName(queryUsageStats)
-                    if (packageName != null && packageName !in EXCLUDED_APPS) {
-                        handleValidPackage(packageName, enabledPackages, rpcButtons)
+                    if (queryUsageStats != null && queryUsageStats.size > 1) {
+                        val packageName = getLatestPackageName(queryUsageStats)
+                        if (packageName != null && packageName !in EXCLUDED_APPS) {
+                            handleValidPackage(packageName, enabledPackages, rpcButtons)
+                        }
                     }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    Log.e("AppDetectionService", "Detection cycle failed: ${e.message}")
                 }
-                delay(5000)
+                delay(2000)
             }
         }
     }
@@ -167,7 +177,17 @@ class AppDetectionService : Service() {
     }
 
     private suspend fun handleEnabledPackage(packageName: String, rpcButtons: RpcButtons) {
-        if (!kizzyRPC.isRpcRunning()) {
+        if (kizzyRPC.isRpcRunning()) {
+            kizzyRPC.updateRPC(
+                CommonRpc(
+                    name = AppUtils.getAppName(packageName),
+                    largeImage = RpcImage.ApplicationIcon(packageName, this@AppDetectionService),
+                    time = Timestamps(start = System.currentTimeMillis()),
+                    packageName = packageName
+                ),
+                enableTimestamps = true
+            )
+        } else {
             kizzyRPC.apply {
                 setName(AppUtils.getAppName(packageName))
                 setStartTimestamps(System.currentTimeMillis())

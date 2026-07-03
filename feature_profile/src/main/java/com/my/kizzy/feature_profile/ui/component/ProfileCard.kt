@@ -104,14 +104,14 @@ fun ProfileCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(120.dp),
-                    model = user.getStaticBannerImage() ?: USER_BANNER,
+                    model = user.getBannerImage() ?: USER_BANNER,
                     contentScale = ContentScale.FillWidth,
                     placeholder = painterResource(R.drawable.broken_image),
                     contentDescription = "User Avatar"
                 )
 
                 AsyncImage(
-                    model = user.getStaticAvatarImage(),
+                    model = user.getAvatarImage(),
                     placeholder = painterResource(id = R.drawable.error_avatar),
                     error = painterResource(id = R.drawable.error_avatar),
                     contentDescription = null,

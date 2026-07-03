@@ -27,7 +27,7 @@ object Constants {
     const val NINTENDO_3DS = "Nintendo-3DS"
     const val WII_U = "Wii-U"
     const val XBOX = "Xbox"
-    const val APPLICATION_ID = "962990036020756480"
+    const val APPLICATION_ID = "1522589499903840448"
     const val IMGUR_CLIENT_ID = "d70305e7c3ac5c6"
     const val APP_DIRECTORY = "App Directory"
     const val DOWNLOADS_DIRECTORY = "Downloads Directory"
