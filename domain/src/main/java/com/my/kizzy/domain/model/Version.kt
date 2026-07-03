@@ -45,6 +45,11 @@ class Version(numbers: List<String>) {
     fun whetherNeedUpdate(current: Version): Boolean = this > current
 }
 
-fun String?.toVersion(): Version = Version(this)
+// Extract trailing build number for both "6.2-enhanced-13" and "enhanced-13"
+private fun String?.buildNumber(): Int? = this?.substringAfterLast("-")?.toIntOrNull()
 
-fun Release.toVersion(): Version = Version(tagName)
+fun String?.toVersion(): Version =
+    buildNumber()?.let { Version(listOf("0", it.toString())) } ?: Version(this)
+
+fun Release.toVersion(): Version =
+    tagName.buildNumber()?.let { Version(listOf("0", it.toString())) } ?: Version(tagName)
