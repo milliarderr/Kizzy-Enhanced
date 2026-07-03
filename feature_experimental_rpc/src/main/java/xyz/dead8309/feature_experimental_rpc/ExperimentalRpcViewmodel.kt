@@ -239,12 +239,6 @@ class ExperimentalRpcViewmodel @Inject constructor(
 
                 is UiEvent.SetTimestampMode -> {
                     Prefs[Prefs.EXPERIMENTAL_RPC_TIMESTAMP_MODE] = event.value
-                    // Selecting "current" re-anchors the elapsed timer to now and
-                    // persists it, so it won't reset on restarts / after 24h.
-                    if (event.value == "current") {
-                        Prefs[Prefs.EXPERIMENTAL_RPC_TIMESTAMP_CURRENT_START] =
-                            System.currentTimeMillis().toString()
-                    }
                     _uiState.update { it.copy(timestampMode = event.value, timestampModeExpanded = false) }
                     restartServiceIfRunning()
                 }

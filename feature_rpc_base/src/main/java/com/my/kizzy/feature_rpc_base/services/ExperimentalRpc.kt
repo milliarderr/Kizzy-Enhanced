@@ -532,12 +532,14 @@ class ExperimentalRpc : Service() {
         if (!Prefs[Prefs.EXPERIMENTAL_RPC_ENABLE_TIMESTAMPS, true]) return null
         return when (Prefs[Prefs.EXPERIMENTAL_RPC_TIMESTAMP_MODE, "default"]) {
             "current" -> {
-                var start = Prefs[Prefs.EXPERIMENTAL_RPC_TIMESTAMP_CURRENT_START, ""].toLongOrNull() ?: 0L
-                if (start <= 0L) {
-                    start = System.currentTimeMillis()
-                    Prefs[Prefs.EXPERIMENTAL_RPC_TIMESTAMP_CURRENT_START] = start.toString()
-                }
-                Timestamps(start = start)
+                // Mirror Vencord's customRPC "TIME" mode:
+                // start = midnight of today → Discord shows elapsed = current time of day
+                val cal = java.util.Calendar.getInstance()
+                val midnightMs = System.currentTimeMillis() -
+                    (cal.get(java.util.Calendar.HOUR_OF_DAY) * 3600L +
+                     cal.get(java.util.Calendar.MINUTE) * 60L +
+                     cal.get(java.util.Calendar.SECOND)) * 1000L
+                Timestamps(start = midnightMs)
             }
             "custom" -> {
                 val start = Prefs[Prefs.EXPERIMENTAL_RPC_TIMESTAMP_CUSTOM_START, ""].toLongOrNull()

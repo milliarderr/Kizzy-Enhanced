@@ -86,7 +86,7 @@ object Constants {
      */
     val TIMESTAMP_MODES = linkedMapOf(
         "Media / App (default)" to "default",
-        "Same as your current time (not reset after 24h)" to "current",
+        "Same as current time of day" to "current",
         "Custom" to "custom",
     )
 
