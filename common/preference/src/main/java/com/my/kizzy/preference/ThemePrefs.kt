@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 import com.my.kizzy.resources.R
 
 // TODO get seed color from colorscheme.kt
-const val DEFAULT_SEED_COLOR =  0xFFAF92F1.toInt()
+const val DEFAULT_SEED_COLOR = 0xFFBF1527.toInt()
 data class AppSettings(
     val darkTheme: DarkThemePreference = DarkThemePreference(),
     val isDynamicColorEnabled: Boolean = false,

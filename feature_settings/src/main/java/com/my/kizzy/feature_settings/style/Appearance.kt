@@ -61,8 +61,8 @@ import com.my.kizzy.ui.theme.LocalSeedColor
 import com.my.kizzy.ui.theme.autoDark
 
 val colorList = listOf(
-    Color(DEFAULT_SEED_COLOR),
-    Color(0xFFBF1527), // Red — matches the app icon
+    Color(DEFAULT_SEED_COLOR), // Red (#BF1527) — default
+    Color(0xFFAF92F1), // Original purple
     Color.Blue,
     Hct(60.0, 100.0, 70.0).toSrgb().toColor(),
     Hct(125.0, 50.0, 60.0).toSrgb().toColor(),
