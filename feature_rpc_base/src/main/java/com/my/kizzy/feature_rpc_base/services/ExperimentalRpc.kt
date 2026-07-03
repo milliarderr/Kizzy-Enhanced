@@ -281,7 +281,9 @@ class ExperimentalRpc : Service() {
             finalState = processor.process(templateState) ?: richMediaInfo?.artist
 
             finalLargeImage = when {
-                Prefs[Prefs.EXPERIMENTAL_RPC_SHOW_COVER_ART, true] -> richMediaInfo?.coverArt
+                Prefs[Prefs.EXPERIMENTAL_RPC_SHOW_COVER_ART, true] ->
+                    // Fall back to the player's app icon when cover art is unavailable
+                    richMediaInfo?.coverArt ?: richMediaInfo?.appIcon
                 Prefs[Prefs.EXPERIMENTAL_RPC_SHOW_APP_ICON, false] -> richMediaInfo?.appIcon
                 else -> null
             }
