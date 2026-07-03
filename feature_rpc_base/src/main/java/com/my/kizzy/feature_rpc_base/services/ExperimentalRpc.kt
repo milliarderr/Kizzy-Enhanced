@@ -532,10 +532,10 @@ class ExperimentalRpc : Service() {
         if (!Prefs[Prefs.EXPERIMENTAL_RPC_ENABLE_TIMESTAMPS, true]) return null
         return when (Prefs[Prefs.EXPERIMENTAL_RPC_TIMESTAMP_MODE, "default"]) {
             "current" -> {
-                var start = Prefs[Prefs.EXPERIMENTAL_RPC_TIMESTAMP_CURRENT_START, 0L]
+                var start = Prefs[Prefs.EXPERIMENTAL_RPC_TIMESTAMP_CURRENT_START, ""].toLongOrNull() ?: 0L
                 if (start <= 0L) {
                     start = System.currentTimeMillis()
-                    Prefs[Prefs.EXPERIMENTAL_RPC_TIMESTAMP_CURRENT_START] = start
+                    Prefs[Prefs.EXPERIMENTAL_RPC_TIMESTAMP_CURRENT_START] = start.toString()
                 }
                 Timestamps(start = start)
             }

@@ -243,7 +243,7 @@ class ExperimentalRpcViewmodel @Inject constructor(
                     // persists it, so it won't reset on restarts / after 24h.
                     if (event.value == "current") {
                         Prefs[Prefs.EXPERIMENTAL_RPC_TIMESTAMP_CURRENT_START] =
-                            System.currentTimeMillis()
+                            System.currentTimeMillis().toString()
                     }
                     _uiState.update { it.copy(timestampMode = event.value, timestampModeExpanded = false) }
                     restartServiceIfRunning()
