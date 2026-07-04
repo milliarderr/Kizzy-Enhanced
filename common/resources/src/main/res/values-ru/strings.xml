@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kizzy</string>
+    <string name="app_name">Kizzy Enhanced</string>
 
     <!-- Activities -->
     <string name="activity_name">Название активности</string>
