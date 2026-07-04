@@ -246,4 +246,6 @@
     <string name="timestamp_mode_default">Media / App (default)</string>
     <string name="timestamp_mode_current">Same as current time of day</string>
     <string name="timestamp_mode_custom">Custom</string>
+    <string name="update_installing">Installing…</string>
+    <string name="update_download_error">Download failed. Try again.</string>
 </resources>

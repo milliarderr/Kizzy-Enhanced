@@ -277,6 +277,7 @@ fun Home(
                                     newVersionPublishDate = publishedAt ?: "",
                                     newVersionSize = assets?.getOrNull(0)?.size ?: 0,
                                     newVersionLog = body ?: "",
+                                    apkUrl = assets?.getOrNull(0)?.browserDownloadUrl,
                                     onDismissRequest = {
                                         showUpdateDialog = false
                                     },

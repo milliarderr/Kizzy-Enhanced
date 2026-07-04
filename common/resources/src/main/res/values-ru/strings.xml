@@ -243,4 +243,6 @@
     <string name="timestamp_mode_default">Медиа / Приложение (по умолчанию)</string>
     <string name="timestamp_mode_current">Как текущее время суток</string>
     <string name="timestamp_mode_custom">Своё</string>
+    <string name="update_installing">Установка…</string>
+    <string name="update_download_error">Ошибка загрузки. Попробуйте ещё раз.</string>
 </resources>
