@@ -352,33 +352,38 @@ fun UpdateDialogPreview() {
 }
 
 private fun launchInstaller(context: Context, downloadId: Long, dm: DownloadManager) {
-    try {
-        // Try DownloadManager URI first
-        val uri = dm.getUriForDownloadedFile(downloadId)
-        if (uri != null) {
-            context.startActivity(Intent(Intent.ACTION_VIEW).apply {
-                setDataAndType(uri, "application/vnd.android.package-archive")
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            })
+    // On API 26+, check if we can install unknown apps; if not, open settings first
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (!context.packageManager.canRequestPackageInstalls()) {
+            context.startActivity(
+                Intent(android.provider.Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES).apply {
+                    data = Uri.parse("package:${context.packageName}")
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+            )
             return
         }
-    } catch (_: Exception) {}
+    }
 
-    // Fallback: FileProvider from Downloads directory
-    try {
-        val file = java.io.File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-            "kizzy-enhanced-update.apk"
-        )
-        if (!file.exists()) return
-        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    val file = java.io.File(
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+        "kizzy-enhanced-update.apk"
+    )
+
+    // Build URI — FileProvider for N+, raw file URI for older
+    val uri: Uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        try {
             androidx.core.content.FileProvider.getUriForFile(
                 context, "${context.packageName}.provider", file
             )
-        } else {
-            Uri.fromFile(file)
+        } catch (_: Exception) {
+            dm.getUriForDownloadedFile(downloadId) ?: return
         }
+    } else {
+        Uri.fromFile(file)
+    }
+
+    try {
         context.startActivity(Intent(Intent.ACTION_VIEW).apply {
             setDataAndType(uri, "application/vnd.android.package-archive")
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
