@@ -11,8 +11,6 @@ internal fun Project.configureAndroidCompose(
 ) {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-    pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
-
     commonExtension.apply {
         buildFeatures {
             compose = true
