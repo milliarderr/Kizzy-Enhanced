@@ -18,15 +18,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -34,13 +33,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Update
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.WavyLinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -118,9 +116,7 @@ fun UpdateDialog(
         },
         confirmButton = {
             TextButton(onClick = {
-                if (apkUrl != null) {
-                    showDownloadDialog = true
-                }
+                if (apkUrl != null) showDownloadDialog = true
             }) {
                 Text(text = stringResource(R.string.update))
             }
@@ -146,11 +142,12 @@ private fun DownloadProgressDialog(
     var downloadId by remember { mutableLongStateOf(-1L) }
 
     DisposableEffect(Unit) {
+        val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(ctx: Context, intent: Intent) {
                 val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1L)
                 if (id != downloadId) return
-                val dm = ctx.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
                 val cursor = dm.query(DownloadManager.Query().setFilterById(id))
                 if (cursor.moveToFirst()) {
                     val statusCol = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
@@ -174,11 +171,15 @@ private fun DownloadProgressDialog(
                 cursor.close()
             }
         }
-        val filter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-        context.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
 
-        // Start download immediately
-        val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val filter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        } else {
+            @Suppress("UnspecifiedRegisterReceiverFlag")
+            context.registerReceiver(receiver, filter)
+        }
+
         val request = DownloadManager.Request(Uri.parse(apkUrl))
             .setTitle("Kizzy Enhanced")
             .setDescription(context.getString(R.string.update))
@@ -219,7 +220,6 @@ private fun DownloadProgressDialog(
             ) {
                 Text(
                     text = when (downloadState) {
-                        DownloadState.DOWNLOADING -> stringResource(R.string.update)
                         DownloadState.DONE -> stringResource(R.string.update_installing)
                         DownloadState.ERROR -> stringResource(R.string.update_download_error)
                         else -> stringResource(R.string.update)
@@ -227,30 +227,13 @@ private fun DownloadProgressDialog(
                     style = MaterialTheme.typography.titleLarge,
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    if (progress > 0f) {
-                        LinearProgressIndicator(
-                            progress = { progress },
-                            modifier = Modifier.weight(1f),
-                        )
-                        CircularProgressIndicator(
-                            progress = { progress },
-                            modifier = Modifier.size(32.dp),
-                            strokeWidth = 3.dp,
-                        )
-                    } else {
-                        LinearProgressIndicator(modifier = Modifier.weight(1f))
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(32.dp),
-                            strokeWidth = 3.dp,
-                        )
-                    }
+                if (progress > 0f) {
+                    WavyLinearProgressIndicator(
+                        progress = { progress },
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                } else {
+                    WavyLinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                 }
 
                 Text(
