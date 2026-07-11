@@ -171,7 +171,6 @@ fun ExperimentalRpcScreen(
                     false -> context.stopService(Intent(context, ExperimentalRpc::class.java))
                 }
             }
-            ExperimentalRpcPreview(state = state)
             LazyColumn {
                 item {
                     Subtitle(text = stringResource(R.string.general_settings))
