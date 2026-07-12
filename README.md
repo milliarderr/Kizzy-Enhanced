@@ -32,6 +32,7 @@
 - [x] Material You theme
 - [x] Translations
 - [x] Easy Setup
+- [x] Console RPC spoof 
 - [x] Create custom configs with your own images and links
 - [x] Preview RPC in the app itself
 - [x] Runs in background even when screen is off
